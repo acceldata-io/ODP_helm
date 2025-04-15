@@ -8,6 +8,6 @@ entries:
     digest: d9dbe730336d21d11cd978a9a0379845aa774f9c0f453146e6baa787fecd5c67
     name: ODP-cluster
     urls:
-    - https://raw.githubusercontent.com/sehajsandhu123/ODP_helm/main/ODP-cluster-1.0.0.tgz
+    - https://raw.githubusercontent.com/acceldata-io/ODP_helm/main/ODP-cluster-1.0.0.tgz
     version: 1.0.0
 generated: "2024-12-20T01:29:08.37747037+05:30"
