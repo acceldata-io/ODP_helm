@@ -36,13 +36,11 @@ spec:
               readOnly: true
           resources:
             requests:
-              cpu:    {{ default (ternary "2" "6" (eq .Values.nodes 3)) .Values.resources.requests.cpu }}
-              memory: {{ default (ternary "12Gi" "16Gi" (eq .Values.nodes 3)) .Values.resources.requests.memory }}
-              ephemeral-storage: {{ default (ternary "100Gi" "200Gi" (eq .Values.nodes 3)) .Values.resources.requests.ephemeralStorage }}
+              cpu: "1"
+              memory: "12Gi"
             limits:
-              cpu:    {{ default (ternary "2" "6" (eq .Values.nodes 3)) .Values.resources.limits.cpu }}
-              memory: {{ default "32Gi" .Values.resources.limits.memory }}
-              ephemeral-storage: {{ default (ternary "100Gi" "200Gi" (eq .Values.nodes 3)) .Values.resources.limits.ephemeralStorage }}
+              cpu: "3"
+              memory: "24Gi"
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       volumes:
