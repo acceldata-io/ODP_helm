@@ -36,11 +36,13 @@ spec:
               readOnly: true
           resources:
             requests:
-              cpu: "1"
-              memory: "12Gi"
+              cpu: {{ include "odp.defaultCpuRequest" . }}
+              memory: {{ include "odp.defaultMemoryRequest" . }}
+              ephemeral-storage: {{ include "odp.defaultEphemeralRequest" . }}
             limits:
-              cpu: "3"
-              memory: "24Gi"
+              cpu: {{ include "odp.defaultCpuLimit" . }}
+              memory: {{ include "odp.defaultMemoryLimit" . }}
+              ephemeral-storage: {{ include "odp.defaultEphemeralLimit" . }}
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       volumes:
@@ -61,4 +63,3 @@ spec:
         - name: command-configmap
           configMap:
             name: "{{ .Release.Name }}-command"
-
