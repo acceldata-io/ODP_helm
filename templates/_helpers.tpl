@@ -39,7 +39,7 @@
 {{- if and .Values.resources (hasKey .Values.resources "limits") (hasKey .Values.resources.limits "memory") -}}
 {{- .Values.resources.limits.memory -}}
 {{- else -}}
-{{- ternary "12Gi" "32Gi" (eq $nodes 3) -}}
+{{- ternary "16Gi" "32Gi" (eq $nodes 3) -}}
 {{- end -}}
 {{- end -}}
 
