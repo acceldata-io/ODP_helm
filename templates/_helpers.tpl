@@ -3,7 +3,7 @@
 {{- if and .Values.resources (hasKey .Values.resources "requests") (hasKey .Values.resources.requests "cpu") -}}
 {{- .Values.resources.requests.cpu -}}
 {{- else -}}
-{{- ternary "2" "4" (eq $nodes 3) -}}
+{{- ternary "4" "6" (eq $nodes 3) -}}
 {{- end -}}
 {{- end -}}
 
@@ -12,7 +12,7 @@
 {{- if and .Values.resources (hasKey .Values.resources "requests") (hasKey .Values.resources.requests "memory") -}}
 {{- .Values.resources.requests.memory -}}
 {{- else -}}
-{{- ternary "8Gi" "12Gi" (eq $nodes 3) -}}
+{{- ternary "16Gi" "32Gi" (eq $nodes 3) -}}
 {{- end -}}
 {{- end -}}
 
@@ -21,7 +21,7 @@
 {{- if and .Values.resources (hasKey .Values.resources "requests") (hasKey .Values.resources.requests "ephemeralStorage") -}}
 {{- .Values.resources.requests.ephemeralStorage -}}
 {{- else -}}
-{{- ternary "80Gi" "100Gi" (eq $nodes 3) -}}
+{{- ternary "100Gi" "200Gi" (eq $nodes 3) -}}
 {{- end -}}
 {{- end -}}
 
