@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: trial
-          image: "{{ .Values.image }}"
+          image: "{{ include "odp.getImageName" . }}"
           securityContext:
             privileged: true
           volumeMounts:
