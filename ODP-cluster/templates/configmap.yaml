@@ -7,5 +7,31 @@ metadata:
 data:
   bashexec.sh: |
     #!/bin/bash
-    bash ~/basher.sh '{{ .Release.Name }}' '{{ .Values.jdkVersion }}' '{{ .Values.nodes }}' '{{ .Values.kerberos }}' '{{ .Values.components }}' '{{ .Values.odpVersion }}' '{{ .Values.ambariVersion }}' '{{ .Values.odpUrl }}' '{{ .Values.ambariUrl }}' '{{ .Values.utilsUrl }}'
+    # Execute basher.sh with all ODP configuration parameters
+    # Parameters passed in order:
+    # 1. Release Name
+    # 2. JDK Version (auto-detected)
+    # 3. Number of nodes
+    # 4. Kerberos setting
+    # 5. Components
+    # 6. ODP Version
+    # 7. Ambari Version
+    # 8. ODP URL
+    # 9. Ambari URL
+    # 10. Utils URL
+    # 11. Python Version (auto-detected)
+    # 12. Mpack URL
+    bash ~/basher.sh \
+      '{{ .Release.Name }}' \
+      '{{ include "odp.getJdkVersion" . }}' \
+      '{{ .Values.nodes }}' \
+      '{{ .Values.Kerberos }}' \
+      '{{ .Values.Components }}' \
+      '{{ .Values.OdpVersion }}' \
+      '{{ .Values.AmbariVersion }}' \
+      '{{ .Values.OdpUrl }}' \
+      '{{ .Values.AmbariUrl }}' \
+      '{{ .Values.UtilsUrl }}' \
+      '{{ include "odp.getPythonVersion" . }}' \
+      '{{ .Values.MpackUrl}}'
 
