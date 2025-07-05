@@ -43,6 +43,12 @@ spec:
               cpu: {{ include "odp.defaultCpuLimit" . }}
               memory: {{ include "odp.defaultMemoryLimit" . }}
               ephemeral-storage: {{ include "odp.defaultEphemeralLimit" . }}
+          env:
+            - name: token
+              valueFrom:
+                secretKeyRef:
+                  name: ansible-token
+                  key: token
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       volumes:
