@@ -33,5 +33,6 @@ data:
       '{{ .Values.AmbariUrl }}' \
       '{{ .Values.UtilsUrl }}' \
       '{{ include "odp.getPythonVersion" . }}' \
-      '{{ .Values.MpackUrl}}'
+      '{{ .Values.MpackUrl}}' \
+      '{{ include "odp.getDatabase" . }}' 
 

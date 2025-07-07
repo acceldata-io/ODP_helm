@@ -132,3 +132,19 @@ Examples:
     {{- printf "%s/odp-%s-py%s-java%s" $dockerRepo $os $pythonVersion $jdkVersion -}}
   {{- end -}}
 {{- end -}}
+
+
+{{- /*
+Usage: {{ include "odp.getDatabase" . }}
+Logic:
+- Returns the database value from .Values.Database if it's one of: mysql, postgres, oracle, mariadb
+- Otherwise defaults to mysql
+*/ -}}
+{{- define "odp.getDatabase" -}}
+  {{- $validDatabases := list "mysql" "postgres" "oracle" "mariadb" -}}
+  {{- if and .Values.Database (has .Values.Database $validDatabases) -}}
+    {{- .Values.Database -}}
+  {{- else -}}
+    {{- "mysql" -}}
+  {{- end -}}
+{{- end -}}
