@@ -21,6 +21,8 @@ data:
     # 10. Utils URL
     # 11. Python Version (auto-detected)
     # 12. Mpack URL
+    # 13. Database
+    # 14. HA
     bash ~/basher.sh \
       '{{ .Release.Name }}' \
       '{{ include "odp.getJdkVersion" . }}' \
@@ -34,5 +36,6 @@ data:
       '{{ .Values.UtilsUrl }}' \
       '{{ include "odp.getPythonVersion" . }}' \
       '{{ .Values.MpackUrl}}' \
-      '{{ include "odp.getDatabase" . }}' 
+      '{{ include "odp.getDatabase" . }}' \
+      '{{ include "odp.getHA" . }}' 
 

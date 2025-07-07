@@ -148,3 +148,13 @@ Logic:
     {{- "mysql" -}}
   {{- end -}}
 {{- end -}}
+
+
+# Helper to get HA setting with default fallback
+{{- /*
+Usage: {{ include "odp.getHA" . }}
+Returns HA setting from .Values.HA or defaults to "No"
+*/ -}}
+{{- define "odp.getHA" -}}
+  {{- .Values.HA | default "No" -}}
+{{- end -}}
