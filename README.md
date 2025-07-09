@@ -24,17 +24,17 @@ The chart creates:
 ### Prerequisites
 
 - Kubernetes cluster with sufficient resources
-- Access to ODP container images
+- User kubeconfig yaml to access to that cluster
+- prerequisite installations of helm, kubectl, k9s which can be done using
+
+```bash
+curl -sSL https://mirror.odp.acceldata.dev/ODP/kubernetes/setup_local.sh | bash
+source ~/.config/envman/PATH.env
+```
 
 ### Add Helm Repository
 
-To use this chart, you need to add the ODP Helm repository to your local Helm installation:
-
-```bash
-helm repo add odp-deployer https://github.com/acceldata-io/ODP_helm/raw/{{branch}}
-```
-
-To list 
+To list exising repos
 
 ```bash
 helm repo list
@@ -52,6 +52,11 @@ To update a helm repo
 helm repo update
 ```
 
+To use this chart, you need to add the ODP Helm repository to your local Helm installation:
+
+```bash
+helm repo add odp-deployer https://github.com/acceldata-io/ODP_helm/raw/{{branch}}
+```
 
 ### Basic Installation
 
@@ -85,8 +90,8 @@ OperatingSystem: rhel8
 # number of nodes / containers in cluster
 nodes: 1                              # Upto 7 nodes
 
-# "AMBARI,HDFS,ZOOKEEPER,YARN,MAP-REDUCE,INFRA-SOLR,HIVE,TEZ,HBASE,SQOOP,RANGER,RANGER-KMS,DRUID,SPARK2,OOZIE"
-Components: "AMBARI,HDFS,ZOOKEEPER,YARN,MAP-REDUCE,INFRA-SOLR,HIVE,TEZ,HBASE,SQOOP,RANGER,RANGER-KMS,DRUID,OOZIE,IMPALA, HUE, SPARK3, KAFKA, KNOX, ZEPPELIN, HTTPFS,FLINK, KAFKA3, CRUISE_CONTROL3, IMPALA, PINOT, REGISTRY, AIRFLOW, NIFI, NIFI_REGISTRY, HUE"
+# "AMBARI,HDFS,ZOOKEEPER,YARN,MAP-REDUCE,INFRA-SOLR,HIVE,TEZ,HBASE,SQOOP,RANGER,RANGER-KMS,DRUID,OOZIE,IMPALA, HUE, SPARK3, KAFKA, KNOX, ZEPPELIN, HTTPFS,FLINK, KAFKA3, CRUISE_CONTROL3, IMPALA, PINOT, REGISTRY, AIRFLOW, NIFI, NIFI_REGISTRY, HUE"
+Components: "AMBARI,HDFS,ZOOKEEPER,YARN,MAP-REDUCE,INFRA-SOLR,HIVE,TEZ"
 
 AmbariVersion: "2.7.9.1-1"
 AmbariUrl: "https://mirror.odp.acceldata.dev/v2/ambari/python3/jdk11/2.7.9.1-1/releases/rhel8/"
@@ -115,7 +120,7 @@ helm install my-odp-cluster odp-deployer/ODP-cluster -n my-namespace -f my-odp-r
 | Parameter | Description | Default | Example |
 |-----------|-------------|---------|---------|
 | `OperatingSystem` | OS for container images | `rhel8` | `rhel8`, `ubuntu22` |
-| `OdpVersion` | ODP version to deploy | Required | `3.3.6.0-1`, `3.2.3.3-3` |
+| `OdpVersion` | ODP version to deploy | Required | `3.3.6.1-1`, `3.2.3.3-3` |
 | `nodes` | Number of cluster nodes | `3` | `3`, `4` |
 | `Kerberos` | Enable Kerberos security | `Yes` | `Yes`, `No` |
 | `HA` | Enable High Availability | `No` | `Yes`, `No` |
@@ -126,7 +131,7 @@ helm install my-odp-cluster odp-deployer/ODP-cluster -n my-namespace -f my-odp-r
 | Parameter | Description | Default |
 |-----------|-------------|---------|
 | `dockerRepository` | Docker registry/repository | `harshith212` |
-| `Components` | Specific components to install | `""` (all) |
+| `Components` | Specific components to install | `"AMBARI,HDFS,ZOOKEEPER,YARN,MAP-REDUCE"` |
 | `pythonVersion` | Override Python version | Auto-detected |
 | `jdkVersion` | Override JDK version | Auto-detected |
 | `image` | Override container image | Auto-generated |
