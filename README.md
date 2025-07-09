@@ -26,6 +26,33 @@ The chart creates:
 - Kubernetes cluster with sufficient resources
 - Access to ODP container images
 
+### Add Helm Repository
+
+To use this chart, you need to add the ODP Helm repository to your local Helm installation:
+
+```bash
+helm repo add odp-deployer https://github.com/acceldata-io/ODP_helm/raw/{{branch}}
+```
+
+To list 
+
+```bash
+helm repo list
+```
+
+To clean existing stale charts
+
+```bash
+helm repo remove <repo name>
+```
+
+To update a helm repo
+
+```bash
+helm repo update
+```
+
+
 ### Basic Installation
 
 ```bash
