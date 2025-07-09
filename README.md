@@ -120,6 +120,12 @@ Kerberos: "Yes"                           # Yes or No
 helm install {cluster name} odp-deployer/ODP-cluster -n {namespace} -f my-odp-rhel8-v3.3.6.yml
 ```
 
+### 4. Start Cluster deployment
+
+```bash
+kubectl exec -n {namespace} {cluster name}-0 -- bash /config/bashexec.sh
+```
+
 ## Configuration Options
 
 ### Core Settings
