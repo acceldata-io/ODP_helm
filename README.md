@@ -32,6 +32,20 @@ curl -sSL https://mirror.odp.acceldata.dev/ODP/kubernetes/setup_local.sh | bash
 source ~/.config/envman/PATH.env
 ```
 
+- Download kubeconfig freshly from rancher ui and export as shown below
+
+```bash
+export KUBECONFIG=sandbox.yml
+```
+
+- To connect to k8s DNS for hostname resolution
+
+```bash
+telepresence connect
+```
+
+
+
 ### Add Helm Repository
 
 To list exising repos
@@ -56,13 +70,6 @@ To use this chart, you need to add the ODP Helm repository to your local Helm in
 
 ```bash
 helm repo add odp-deployer https://github.com/acceldata-io/ODP_helm/raw/{{branch}}
-```
-
-### Basic Installation
-
-```bash
-# Install with default values
-helm install my-odp-cluster odp-deployer/ODP-cluster -n my-namespace
 ```
 
 ## Custom Installation
@@ -110,7 +117,7 @@ Kerberos: "Yes"                           # Yes or No
 
 ```bash
 # Install with your custom values file
-helm install my-odp-cluster odp-deployer/ODP-cluster -n my-namespace -f my-odp-rhel8-v3.3.6.yml
+helm install {cluster name} odp-deployer/ODP-cluster -n {namespace} -f my-odp-rhel8-v3.3.6.yml
 ```
 
 ## Configuration Options
