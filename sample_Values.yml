@@ -17,6 +17,7 @@ UtilsUrl: "https://mirror.odp.acceldata.dev/v2/odp-utils/ubuntu22/"
 MpackUrl: "https://mirror.odp.acceldata.dev/v2/odp/python3/jdk11/3.3.6.1-1/mpacks/"
 
 Kerberos: "Yes"                           # Yes or No
+HA: "No"                                  # Yes or No
 
 ##### OPTIONAL PARAMETERS #####
 
