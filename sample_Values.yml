@@ -1,35 +1,33 @@
-# There are 4 images
-# Please use the one required by your ODP release
-#For Rocky 9
-#Python3 : sehajsandhu/odp_rl9_py311:latest
-#Python3 wrap img: sehajsandhu/rl9_py3_wrap:latest
-#
-#For Rocky 8 
-#Python2 : sehajsandhu/odp_rl8_py2:latest
-#Python3 : sehajsandhu/odp_rl8_py311:latest
-#
-#For ubuntu 20
-#Python2 : sehajsandhu/odp_ub20_py2:latest
-#Python3 : sehajsandhu/odp_ub20_py311:latest
+## Operating sys options : centos7, rhel8, rhel8, ubuntu20, ubuntu22
+OperatingSystem: ubuntu22
 
+# number of nodes / containers in cluster
+nodes: 1                              # Upto 7 nodes
 
-image: sehajsandhu/odp_rl8_py311:latest
-nodes: 3                               # Upto 4 nodes
-components: ""                         # "AMBARI,HDFS,ZOOKEEPER,YARN,MAP-REDUCE,INFRA-SOLR,HIVE,TEZ,HBASE,SQOOP,RANGER,RANGER-KMS,DRUID,SPARK2,OOZIE"
-ambariVersion: "2.7.9.0-1"
-ambariUrl: "https://mirror.odp.acceldata.dev/ODP/rhel/Ambari-2.7.9.0-1/"     
-odpVersion: "3.3.6.0-1"
-odpUrl: "https://mirror.odp.acceldata.dev/ODP/rhel/3.3.6.0-1/"          
-utilsUrl: "https://mirror.odp.acceldata.dev/ODP/centos/ODP-UTILS-1.1.0.22/centos8/"
-jdkVersion: "11"                         # 8 or 11
-kerberos: "Yes"                           # Yes or No
+# "AMBARI,HDFS,ZOOKEEPER,YARN,MAP-REDUCE,INFRA-SOLR,HIVE,TEZ,HBASE,SQOOP,RANGER,RANGER-KMS,DRUID,OOZIE,IMPALA, HUE, SPARK3, KAFKA, KNOX, ZEPPELIN, HTTPFS,FLINK, KAFKA3, CRUISE_CONTROL3, IMPALA, PINOT, REGISTRY, AIRFLOW, NIFI, NIFI_REGISTRY, HUE, TRINO, JUPYTERHUB"
+Components: "AMBARI,HDFS,ZOOKEEPER,YARN,MAP-REDUCE,INFRA-SOLR,HIVE,TEZ,HBASE"
 
-resources:
-  requests:
-    cpu: "1"
-    memory: "2Gi"
-  limits:
-    cpu: "4"
-    memory: "12Gi"
+AmbariVersion: "2.7.9.1-1"
+AmbariUrl: "https://mirror.odp.acceldata.dev/v2/ambari/python3/jdk11/2.7.9.1-1/releases/ubuntu22/"
 
+OdpVersion: "3.3.6.1-1"
+OdpUrl: "https://mirror.odp.acceldata.dev/v2/odp/python3/jdk11/3.3.6.1-1/releases/ubuntu22/"
+
+UtilsUrl: "https://mirror.odp.acceldata.dev/v2/odp-utils/ubuntu22/"
+MpackUrl: "https://mirror.odp.acceldata.dev/v2/odp/python3/jdk11/3.3.6.1-1/mpacks/"
+
+Kerberos: "Yes"                           # Yes or No
+HA: "No"                                  # Yes or No
+
+##### OPTIONAL PARAMETERS #####
+
+# Database: "mysql" 
+
+# resources:
+#   requests:
+#     cpu: "2"
+#     memory: "16Gi"
+#   limits:
+#     cpu: "6"
+#     memory: "32Gi"
 

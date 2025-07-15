@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: trial
-          image: "{{ .Values.image }}"
+          image: "{{ include "odp.getImageName" . }}"
           securityContext:
             privileged: true
           volumeMounts:
@@ -43,6 +43,15 @@ spec:
               cpu: {{ include "odp.defaultCpuLimit" . }}
               memory: {{ include "odp.defaultMemoryLimit" . }}
               ephemeral-storage: {{ include "odp.defaultEphemeralLimit" . }}
+          {{- $secret := lookup "v1" "Secret" .Release.Namespace "ansible-token" }}
+          {{- if and $secret (hasKey $secret.data "token") }}
+          env:
+            - name: token
+              valueFrom:
+                secretKeyRef:
+                  name: ansible-token
+                  key: token
+          {{- end }}
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       volumes:
