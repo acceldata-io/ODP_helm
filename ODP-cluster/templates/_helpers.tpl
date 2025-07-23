@@ -57,7 +57,7 @@
 Usage: {{ include "odp.getPythonVersion" . }}
 Logic:
 - if odp version starts with 3.3 then pythonVersion 311
-- else if version after "-" first digit is 3 then python 311
+- else if odp version starts with 3.2 then check digit after dash: if 3 then 311, if 2 then 2
 - else python2
 */ -}}
 {{- define "odp.getPythonVersion" -}}
@@ -67,18 +67,14 @@ Logic:
     {{- $OdpVersion := .Values.OdpVersion | toString -}}
     {{- if hasPrefix "3.3" $OdpVersion -}}
       {{- "311" -}}
-    {{- else -}}
-      {{- $parts := split "-" $OdpVersion -}}
-      {{- if gt (len $parts) 1 -}}
-        {{- $afterDash := index $parts 1 -}}
-        {{- if hasPrefix "3" $afterDash -}}
-          {{- "311" -}}
-        {{- else -}}
-          {{- "2" -}}
-        {{- end -}}
+    {{- else if hasPrefix "3.2" $OdpVersion -}}
+      {{- if hasSuffix "-3" $OdpVersion -}}
+        {{- "311" -}}
       {{- else -}}
         {{- "2" -}}
       {{- end -}}
+    {{- else -}}
+      {{- "2" -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
