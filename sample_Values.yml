@@ -1,23 +1,26 @@
-## Operating sys options : centos7, rhel8, rhel8, ubuntu20, ubuntu22
-OperatingSystem: ubuntu22
+## Operating sys options : centos7, rhel8, rhel9, ubuntu20, ubuntu22
+OperatingSystem: rhel8
+
+## Prebaked: "Yes" or "No". Yes - uses a image where rpms/deb packages are already installed. check the image tags in the https://repo1.acceldata.dev/#browse/browse:odp-images:v2%2Fodp-images%2Fruntime-env-prebaked for existing images.
+# Prebaked: "Yes"
 
 # number of nodes / containers in cluster
-nodes: 1                              # Upto 7 nodes
+nodes: 3                              # Upto 7 nodes
 
 # "AMBARI,HDFS,ZOOKEEPER,YARN,MAP-REDUCE,INFRA-SOLR,HIVE,TEZ,HBASE,SQOOP,RANGER,RANGER-KMS,DRUID,OOZIE,IMPALA, HUE, SPARK3, KAFKA, KNOX, ZEPPELIN, HTTPFS,FLINK, KAFKA3, CRUISE_CONTROL3, IMPALA, PINOT, REGISTRY, AIRFLOW, NIFI, NIFI_REGISTRY, HUE, TRINO, JUPYTERHUB"
 Components: "AMBARI,HDFS,ZOOKEEPER,YARN,MAP-REDUCE,INFRA-SOLR,HIVE,TEZ,HBASE"
 
 AmbariVersion: "2.7.9.1-1"
-AmbariUrl: "https://mirror.odp.acceldata.dev/v2/ambari/python3/jdk11/2.7.9.1-1/releases/ubuntu22/"
+AmbariUrl: "https://mirror.odp.acceldata.dev/v2/ambari/python3/jdk11/2.7.9.1-1/releases/rhel8/"
 
 OdpVersion: "3.3.6.1-1"
-OdpUrl: "https://mirror.odp.acceldata.dev/v2/odp/python3/jdk11/3.3.6.1-1/releases/ubuntu22/"
+OdpUrl: "https://mirror.odp.acceldata.dev/v2/odp/python3/jdk11/3.3.6.1-1/releases/rhel8/"
 
-UtilsUrl: "https://mirror.odp.acceldata.dev/v2/odp-utils/ubuntu22/"
+UtilsUrl: "https://mirror.odp.acceldata.dev/v2/odp-utils/rhel8/"
 MpackUrl: "https://mirror.odp.acceldata.dev/v2/odp/python3/jdk11/3.3.6.1-1/mpacks/"
 
 Kerberos: "Yes"                           # Yes or No
-HA: "No"                                  # Yes or No
+HA: "Yes"                                 # Yes or No
 
 ##### OPTIONAL PARAMETERS #####
 
