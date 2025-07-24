@@ -103,19 +103,31 @@ Logic:
 # Helper to get Docker repository with default fallback
 {{- /*
 Usage: {{ include "odp.getDockerRepository" . }}
-Returns docker repository from .Values.dockerRepository or default
+Priority:
+1. If .Values.dockerRepository is present, use it
+2. If .Values.Prebake is "Yes", use prebaked repository
+3. Otherwise use default repository
 */ -}}
 {{- define "odp.getDockerRepository" -}}
-  {{- .Values.dockerRepository | default "harshith212" -}}
+  {{- if .Values.dockerRepository -}}
+    {{- .Values.dockerRepository -}}
+  {{- else if eq .Values.Prebake "Yes" -}}
+    {{- "repo1.acceldata.dev:8086/odp-images/runtime-env-prebaked" -}}
+  {{- else -}}
+    {{- "repo1.acceldata.dev:8086/odp-images/runtime-env-base" -}}
+  {{- end -}}
 {{- end -}}
 
 # Helper to generate image name based on OS, Python and JDK versions
 {{- /*
 Usage: {{ include "odp.getImageName" . }}
-Generates image name in format: {dockerRepository}/odp-{os}-py{pythonVersion}-jdk{jdkVersion}
+Generates image name in format: {dockerRepository}/odp-{os}-py{pythonVersion}-jdk{jdkVersion}:{tag}
+Tag logic:
+- If Prebake is "Yes": use ODP version as tag
+- Otherwise: use "latest" as tag
 Examples:
-- harshith212/odp-rhel8-py311-jdk11
-- myregistry.com/odp-ubuntu22-py2-jdk8
+- repo1.acceldata.dev:8086/odp-images/runtime-env-base/odp-rhel8-py311-jdk11:latest
+- repo1.acceldata.dev:8086/odp-images/runtime-env-prebaked/odp-rhel8-py311-jdk11:3.3.6.1-1[00x]
 */ -}}
 {{- define "odp.getImageName" -}}
   {{- if .Values.image -}}
@@ -125,7 +137,11 @@ Examples:
     {{- $os := .Values.OperatingSystem | default "rhel8" -}}
     {{- $pythonVersion := include "odp.getPythonVersion" . -}}
     {{- $jdkVersion := include "odp.getJdkVersion" . -}}
-    {{- printf "%s/odp-%s-py%s-java%s" $dockerRepo $os $pythonVersion $jdkVersion -}}
+    {{- $tag := "latest" -}}
+    {{- if eq .Values.Prebake "Yes" -}}
+      {{- $tag = .Values.OdpVersion -}}
+    {{- end -}}
+    {{- printf "%s/odp-%s-py%s-java%s:%s" $dockerRepo $os $pythonVersion $jdkVersion $tag -}}
   {{- end -}}
 {{- end -}}
 
