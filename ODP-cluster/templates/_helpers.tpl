@@ -123,11 +123,13 @@ Priority:
 Usage: {{ include "odp.getImageName" . }}
 Generates image name in format: {dockerRepository}/odp-{os}-py{pythonVersion}-jdk{jdkVersion}:{tag}
 Tag logic:
-- If Prebake is "Yes": use ODP version as tag
+- If .Values.tag is defined: use that tag
+- Else if Prebake is "Yes": use ODP version as tag
 - Otherwise: use "latest" as tag
 Examples:
 - repo1.acceldata.dev:8086/odp-images/runtime-env-base/odp-rhel8-py311-jdk11:latest
-- repo1.acceldata.dev:8086/odp-images/runtime-env-prebaked/odp-rhel8-py311-jdk11:3.3.6.1-1[00x]
+- repo1.acceldata.dev:8086/odp-images/runtime-env-base/odp-rhel8-py311-jdk11:v1.0.0 (when .Values.tag is set)
+- repo1.acceldata.dev:8086/odp-images/runtime-env-prebaked/odp-rhel8-py311-jdk11:3.3.6.1-1[00x] (when Prebake is Yes)
 */ -}}
 {{- define "odp.getImageName" -}}
   {{- if .Values.image -}}
@@ -138,7 +140,9 @@ Examples:
     {{- $pythonVersion := include "odp.getPythonVersion" . -}}
     {{- $jdkVersion := include "odp.getJdkVersion" . -}}
     {{- $tag := "latest" -}}
-    {{- if eq .Values.Prebake "Yes" -}}
+    {{- if .Values.tag -}}
+      {{- $tag = .Values.tag -}}
+    {{- else if eq .Values.Prebake "Yes" -}}
       {{- $tag = .Values.OdpVersion -}}
     {{- end -}}
     {{- printf "%s/odp-%s-py%s-java%s:%s" $dockerRepo $os $pythonVersion $jdkVersion $tag -}}
