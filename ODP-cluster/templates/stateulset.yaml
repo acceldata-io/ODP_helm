@@ -18,12 +18,25 @@ spec:
       containers:
         - name: trial
           image: "{{ include "odp.getImageName" . }}"
+          {{- if .Values.imagePullPolicy }}
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          {{- else }}
+          imagePullPolicy: Always
+          {{- end }}
           securityContext:
             privileged: true
+            capabilities:
+              add:
+                - SYS_ADMIN
+                - NET_ADMIN
+                - NET_BIND_SERVICE
+                - SYS_CHROOT
+                - AUDIT_WRITE
+                - SETFCAP
           volumeMounts:
             - mountPath: /sys/fs/cgroup
               name: cgroup
-              readOnly: true
+              readOnly: false
             - mountPath: /var/run/dbus/system_bus_socket
               name: dbus-socket
               readOnly: true
@@ -43,15 +56,17 @@ spec:
               cpu: {{ include "odp.defaultCpuLimit" . }}
               memory: {{ include "odp.defaultMemoryLimit" . }}
               ephemeral-storage: {{ include "odp.defaultEphemeralLimit" . }}
-          {{- $secret := lookup "v1" "Secret" .Release.Namespace "ansible-token" }}
-          {{- if and $secret (hasKey $secret.data "token") }}
           env:
+            - name: container
+              value: docker
+            {{- $secret := lookup "v1" "Secret" .Release.Namespace "ansible-token" }}
+            {{- if and $secret (hasKey $secret.data "token") }}
             - name: token
               valueFrom:
                 secretKeyRef:
                   name: ansible-token
                   key: token
-          {{- end }}
+            {{- end }}
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       volumes:

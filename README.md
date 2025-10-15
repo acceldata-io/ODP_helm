@@ -181,3 +181,34 @@ For issues and questions:
 - Review Kubernetes events: `kubectl get events -n my-namespace`
 - Examine pod logs for detailed error messages
 
+
+
+## Repository Maintenance
+
+### Updating the Helm Chart
+
+When making changes to the chart, follow these steps to properly package and update the repository:
+
+1. **Remove old package**:
+   ```bash
+   rm -rf ODP-cluster-*.tgz
+   ```
+
+2. **Package the updated chart**:
+   ```bash
+   helm package ./ODP-cluster
+   ```
+
+3. **Update the repository index**:
+   ```bash
+   helm repo index . --url https://raw.githubusercontent.com/acceldata-io/ODP_helm/main
+   ```
+
+4. **Commit and push changes**:
+   ```bash
+   git add .
+   git commit -m "Update chart version X.X.X"
+   git push origin main
+   ```
+
+> **Note**: Always increment the version in `Chart.yaml` before packaging to ensure proper versioning.
