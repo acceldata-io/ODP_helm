@@ -68,6 +68,7 @@ spec:
                   key: token
             {{- end }}
       dnsPolicy: ClusterFirst
+      setHostnameAsFQDN: true
       restartPolicy: Always
       volumes:
         - name: cgroup
