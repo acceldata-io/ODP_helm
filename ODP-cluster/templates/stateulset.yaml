@@ -47,6 +47,26 @@ spec:
             - mountPath: /config
               name: command-configmap
               readOnly: true
+            # Mount LXCFS proc files individually
+            - name: lxcfs-proc
+              mountPath: /proc/cpuinfo
+              subPath: cpuinfo
+            - name: lxcfs-proc
+              mountPath: /proc/meminfo
+              subPath: meminfo
+            - name: lxcfs-proc
+              mountPath: /proc/stat
+              subPath: stat
+            - name: lxcfs-proc
+              mountPath: /proc/uptime
+              subPath: uptime
+            - name: lxcfs-proc
+              mountPath: /proc/loadavg
+              subPath: loadavg
+            # Mount /sys for CPU online info
+            - name: lxcfs-sys
+              mountPath: /sys/devices/system/cpu/online
+              subPath: online
           resources:
             requests:
               cpu: {{ include "odp.defaultCpuRequest" . }}
@@ -88,3 +108,11 @@ spec:
         - name: command-configmap
           configMap:
             name: "{{ .Release.Name }}-command"
+        - name: lxcfs-proc
+          hostPath:
+            path: /var/lib/lxcfs/proc
+            type: ""
+        - name: lxcfs-sys
+          hostPath:
+            path: /var/lib/lxcfs/sys/devices/system/cpu
+            type: ""

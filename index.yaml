@@ -3,11 +3,11 @@ entries:
   ODP-cluster:
   - apiVersion: v2
     appVersion: "1.0"
-    created: "2025-10-30T13:37:18.477471+05:30"
+    created: "2025-10-31T11:36:46.717539+05:30"
     description: A Helm chart for deploying the custom cluster
-    digest: fc2dbd010e6a8b457565cbf8fb9cba1242eb1c9e1b7e5e7713f2764ab2266d74
+    digest: 88b10aa3aab8705388acdf8bb862942d504e7c595a0f21417aced219fe26463f
     name: ODP-cluster
     urls:
-    - https://raw.githubusercontent.com/acceldata-io/ODP_helm/main/ODP-cluster-3.1.1.tgz
-    version: 3.1.1
-generated: "2025-10-30T13:37:18.47706+05:30"
+    - https://raw.githubusercontent.com/acceldata-io/ODP_helm/main/ODP-cluster-3.2.0.tgz
+    version: 3.2.0
+generated: "2025-10-31T11:36:46.71732+05:30"
