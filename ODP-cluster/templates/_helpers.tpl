@@ -62,7 +62,7 @@ Logic:
     {{- if hasPrefix "3.3" $OdpVersion -}}
       {{- "311" -}}
     {{- else if hasPrefix "3.2" $OdpVersion -}}
-      {{- if hasSuffix "-3" $OdpVersion -}}
+      {{- if regexMatch "-3[0-9]*$" $OdpVersion -}}
         {{- "311" -}}
       {{- else -}}
         {{- "2" -}}
