@@ -7,6 +7,13 @@ metadata:
 data:
   bashexec.sh: |
     #!/bin/bash
+    # Clean up any existing basher.sh file
+    rm -rf ~/basher.sh
+    
+    # Download basher.sh from GitHub repository
+    wget -O ~/basher.sh https://raw.githubusercontent.com/acceldata-io/ODP_helm/ODP-5605/basher.sh
+    chmod +x ~/basher.sh
+    
     # Execute basher.sh with all ODP configuration parameters
     # Parameters passed in order:
     # 1. Release Name
