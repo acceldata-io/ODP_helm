@@ -8,7 +8,6 @@ data:
   bashexec.sh: |
     #!/bin/bash
 
-    set -x # Debug mode
     # Clean up any existing basher.sh file
     rm -rf ~/basher.sh
     
