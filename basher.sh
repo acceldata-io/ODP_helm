@@ -18,7 +18,7 @@ database=${13}
 HA_enabled=${14}
 
 # Execute commands only on pod-0
-if [[ $(hostname) == "${odpLabel}-0" ]]; then
+if [[ $(hostname) == ${odpLabel}-0.* ]]; then
 echo "Executing commands on pod-0"
 
 # Check for upper limit on number of nodes
