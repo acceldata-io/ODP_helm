@@ -17,6 +17,8 @@ mpackUrl=${12}
 database=${13}
 HA_enabled=${14}
 
+set -x # Debug mode
+
 # Execute commands only on pod-0
 if [[ $(hostname) == ${odpLabel}-0.* ]]; then
 echo "Executing commands on pod-0"
