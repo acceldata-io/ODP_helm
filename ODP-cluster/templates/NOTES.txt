@@ -13,4 +13,3 @@
 🚀 Next Steps:
    1. Check status: kubectl get pods -n {{ .Release.Namespace }}
    2. Execute ODP setup: kubectl exec -n {{ .Release.Namespace }} {{ .Release.Name }}-0 -- bash /config/bashexec.sh
-   3. is this working
