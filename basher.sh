@@ -97,7 +97,7 @@ else
             ;;
         "rhel8"|"rhel9"|"rhel"*)
             echo "Cloning ansible-rhel repository for $OS_TYPE"
-            git clone -b ODP-5666 https://${GITHUB_TOKEN}@github.com/acceldata-io/ansible-rhel8.git
+            git clone -b ODP-5666-1 https://${GITHUB_TOKEN}@github.com/acceldata-io/ansible-rhel8.git
             mv ansible-rhel8 ansible-hortonworks
             ;;
         "centos7"|"centos"*)
