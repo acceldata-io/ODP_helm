@@ -162,6 +162,18 @@ if [[ $java_version == *"11"* ]]; then
     mv ~/ansible-hortonworks/playbooks/roles/ambari-blueprint/templates/blueprint_dynamic.j2 ~/ansible-hortonworks/playbooks/roles/ambari-blueprint/templates/blueprint_dynamic.j2_jdk8
     cp -r ~/ansible-hortonworks/playbooks/roles/ambari-blueprint/templates/blueprint_dynamic_jdk11.j2 ~/ansible-hortonworks/playbooks/roles/ambari-blueprint/templates/blueprint_dynamic.j2
 fi
+# Java 17 selection
+if [[ $java_version == *"17"* ]]; then
+    echo "Updating Java version to 17"
+    sed -i "s/java-1.8.0-openjdk-devel/java-17-openjdk-devel/g" ~/ansible-hortonworks/playbooks/roles/common/vars/*.yml
+    sed -i "s/openjdk-8-jdk/openjdk-17-jdk/g" ~/ansible-hortonworks/playbooks/roles/common/vars/*.yml
+    sed -i "s/java-1.8.0-openjdk/java-17-openjdk/g" ~/ansible-hortonworks/playbooks/roles/ambari-server/vars/*.yml
+    sed -i "s/java-1.8.0-openjdk-amd64/java-1.17.0-openjdk-amd64/g" ~/ansible-hortonworks/playbooks/roles/ambari-server/vars/*.yml
+    sed -i "s/java-8-openjdk-amd64/java-17-openjdk-amd64/g" ~/ansible-hortonworks/playbooks/roles/ambari-server/vars/*.yml
+    mv ~/ansible-hortonworks/playbooks/roles/ambari-blueprint/templates/blueprint_dynamic.j2 ~/ansible-hortonworks/playbooks/roles/ambari-blueprint/templates/blueprint_dynamic.j2_jdk8
+    mv ~/ansible-hortonworks/playbooks/roles/ambari-blueprint/templates/blueprint_dynamic_jdk17.j2 ~/ansible-hortonworks/playbooks/roles/ambari-blueprint/templates/blueprint_dynamic.j2
+fi
+
 
 # Blueprint update
 if [[ $NoOfNodes == "1" ]]; then
