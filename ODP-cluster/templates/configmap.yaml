@@ -12,7 +12,8 @@ data:
     rm -rf ~/basher.sh
     
     # Download basher.sh from GitHub repository
-    wget -O ~/basher.sh https://raw.githubusercontent.com/acceldata-io/ODP_helm/ODP-5605/basher.sh
+    ## change to main after testing
+    wget -O ~/basher.sh https://raw.githubusercontent.com/acceldata-io/ODP_helm/ODP-5678/basher.sh
     chmod +x ~/basher.sh
     
     # Execute basher.sh with all ODP configuration parameters
