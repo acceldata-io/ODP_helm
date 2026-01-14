@@ -438,6 +438,19 @@ fi
 if [[ $cluster_type == *"TRINO"* ]]; then
     echo "Adding TRINO"
     sed -i "s/#- TRINO_COORDINATOR/- TRINO_COORDINATOR/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- TRINO_WORKER/- TRINO_WORKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if [[ $cluster_type == *"CLICKHOUSE"* ]]; then
+    echo "Adding CLICKHOUSE"
+    sed -i "s/#- CLICKHOUSE_KEEPER/- CLICKHOUSE_KEEPER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- CLICKHOUSE_SERVER/- CLICKHOUSE_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- CLICKHOUSE_WEBSERVER/- CLICKHOUSE_WEBSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if [[ $cluster_type == *"MLFLOW"* ]]; then
+    echo "Adding MLFLOW"
+    sed -i "s/#- MLFLOW_SERVER/- MLFLOW_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
 
