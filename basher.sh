@@ -305,6 +305,7 @@ fi
 if [[ $cluster_type == *"KAFKA"* ]]; then
     echo "Adding Kafka"
     sed -i "s/#- KAFKA_BROKER/- KAFKA_BROKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- CRUISE_CONTROL$/- CRUISE_CONTROL/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
 if [[ $cluster_type == *"HBASE"* ]]; then
@@ -312,6 +313,7 @@ if [[ $cluster_type == *"HBASE"* ]]; then
     sed -i "s/#, 'HBASE_CLIENT'/, 'HBASE_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- HBASE_REGIONSERVER/- HBASE_REGIONSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- HBASE_MASTER/- HBASE_MASTER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- PHOENIX_QUERY_SERVER/- PHOENIX_QUERY_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
 if [[ $cluster_type == *"HDFS"* ]]; then
