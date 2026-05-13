@@ -455,6 +455,11 @@ if [[ $cluster_type == *"MLFLOW"* ]]; then
     sed -i "s/#- MLFLOW_SERVER/- MLFLOW_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
+if [[ $cluster_type == *"SUPERSET"* ]]; then
+    echo "Adding SUPERSET"
+    sed -i "s/#- SUPERSET/- SUPERSET/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
 
 sed -i "s/is_vm_docker_containers: 'no'/is_vm_docker_containers: 'yes'/g" ~/ansible-hortonworks/playbooks/group_vars/all
 
