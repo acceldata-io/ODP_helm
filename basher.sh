@@ -305,7 +305,6 @@ fi
 if [[ $cluster_type == *"KAFKA"* ]]; then
     echo "Adding Kafka"
     sed -i "s/#- KAFKA_BROKER/- KAFKA_BROKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
-    sed -i "s/#- CRUISE_CONTROL$/- CRUISE_CONTROL/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
 if [[ $cluster_type == *"HBASE"* ]]; then
