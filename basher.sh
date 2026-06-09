@@ -291,6 +291,30 @@ if [[ $cluster_type == *"SPARK3"* ]]; then
     sed -i "s/#- LIVY3_SERVER/- LIVY3_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
+if [[ $cluster_type == *"SPARK3_3_3_3"* ]]; then
+    echo "Adding Spark3.3.3"
+    sed -i "s/#, 'SPARK3_3_3_3_CLIENT'/, 'SPARK3_3_3_3_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- SPARK3_3_3_3_JOBHISTORYSERVER/- SPARK3_3_3_3_JOBHISTORYSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- SPARK3_3_3_3_THRIFTSERVER/- SPARK3_3_3_3_THRIFTSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- LIVY3_3_3_3_SERVER/- LIVY3_3_3_3_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if [[ $cluster_type == *"SPARK3_3_5_1"* ]]; then
+    echo "Adding Spark3.5.1"
+    sed -i "s/#, 'SPARK3_3_5_1_CLIENT'/, 'SPARK3_3_5_1_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- SPARK3_3_5_1_JOBHISTORYSERVER/- SPARK3_3_5_1_JOBHISTORYSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- SPARK3_3_5_1_THRIFTSERVER/- SPARK3_3_5_1_THRIFTSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- LIVY3_3_5_1_SERVER/- LIVY3_3_5_1_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if [[ $cluster_type == *"SPARK4"* ]]; then
+    echo "Adding Spark4"
+    sed -i "s/#, 'SPARK4_CLIENT'/, 'SPARK4_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- SPARK4_JOBHISTORYSERVER/- SPARK4_JOBHISTORYSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- SPARK4_THRIFTSERVER/- SPARK4_THRIFTSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- LIVY4_SERVER/- LIVY4_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
 if [[ $cluster_type == *"YARN"* ]]; then
     echo "Adding YARN"
     sed -i "s/#, 'YARN_CLIENT'/, 'YARN_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
