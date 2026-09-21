@@ -88,27 +88,12 @@ if [ -d ~/ansible-hortonworks ]; then
     echo "Found existing ansible-hortonworks directory, using to it..."
 else
     echo "No existing ansible-hortonworks directory found, will clone fresh repository..."
-    # Clone the appropriate OS-specific ansible repository based on detected OS
-    case $OS_TYPE in
-        "ubuntu22"|"ubuntu20"|"ubuntu"*)
-            echo "Cloning ansible-ubuntu repository for $OS_TYPE"
-            git clone -b UB_FLAG https://${GITHUB_TOKEN}@github.com/acceldata-io/ansible-ubuntu.git
-            mv ansible-ubuntu ansible-hortonworks
-            ;;
-        "rhel8"|"rhel9"|"rhel"*)
-            echo "Cloning ansible-rhel repository for $OS_TYPE"
-            git clone -b RHEL_FLAG https://${GITHUB_TOKEN}@github.com/acceldata-io/ansible-rhel8.git
-            mv ansible-rhel8 ansible-hortonworks
-            ;;
-        "centos7"|"centos"*)
-            echo "Cloning ansible-centos repository for $OS_TYPE"
-            git clone https://${GITHUB_TOKEN}@github.com/acceldata-io/ansible-centos7.git
-            mv ansible-centos7 ansible-hortonworks
-            ;;
-        *)
-            echo "No specific ansible repository found for $OS_TYPE, falling back to default"
-            ;;
-    esac
+    # Every OS deploys from ansible-odp master now (the old per-OS repos
+    # ansible-ubuntu/ansible-rhel8/ansible-centos7 are gone), so there is a
+    # single clone here instead of a case on $OS_TYPE.
+    echo "Cloning ansible-odp repository for $OS_TYPE"
+    git clone -b master https://${GITHUB_TOKEN}@github.com/acceldata-io/ansible-odp.git
+    mv ansible-odp ansible-hortonworks
 fi
 
 
