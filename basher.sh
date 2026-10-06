@@ -200,75 +200,80 @@ fi
 # Component selection
 echo "Configuring components..."
 
-if [[ $cluster_type == *"AMBARI"* ]]; then
+# Exact token match; substring matching let OZONE fire on OZONE2 and SOLR on INFRA-SOLR.
+has_component() {
+    [[ ",${cluster_type// /}," == *",$1,"* ]]
+}
+
+if has_component "AMBARI"; then
     echo "Adding infra-solr"
     sed -i "s/#- AMBARI_SERVER/- AMBARI_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"INFRA-SOLR"* ]]; then
+if has_component "INFRA-SOLR"; then
     echo "Adding INFRA_SOLR_CLIENT"
     sed -i "s/#, 'INFRA_SOLR_CLIENT'/, 'INFRA_SOLR_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- INFRA_SOLR/- INFRA_SOLR/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"RANGER"* ]]; then
+if has_component "RANGER"; then
     echo "Adding Ranger"
     sed -i "s/#- RANGER_USERSYNC/- RANGER_USERSYNC/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- RANGER_ADMIN/- RANGER_ADMIN/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"RANGER-KMS"* ]]; then
+if has_component "RANGER-KMS"; then
     echo "Adding Ranger-KMS"
     sed -i "s/#- RANGER_KMS_SERVER/- RANGER_KMS_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"OOZIE"* ]]; then
+if has_component "OOZIE"; then
     echo "Adding Oozie"
     sed -i "s/#, 'OOZIE_CLIENT'/, 'OOZIE_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- OOZIE_SERVER/- OOZIE_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"IMPALA"* ]]; then
+if has_component "IMPALA"; then
     echo "Adding Impala"
     sed -i "s/#- IMPALA_DAEMON/- IMPALA_DAEMON/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- IMPALA_STATE_STORE/- IMPALA_STATE_STORE/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- IMPALA_CATALOG_SERVICE/- IMPALA_CATALOG_SERVICE/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"SQOOP"* ]]; then
+if has_component "SQOOP"; then
     echo "Adding Sqoop"
     sed -i "s/#, 'SQOOP'/, 'SQOOP'/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"HUE"* ]]; then
+if has_component "HUE"; then
     echo "Adding Hue"
     sed -i "s/#- HUE_SERVER/- HUE_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"MAP-REDUCE"* ]]; then
+if has_component "MAP-REDUCE"; then
     echo "Adding Map reduce"
     sed -i "s/#, 'MAPREDUCE2_CLIENT'/, 'MAPREDUCE2_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"TEZ"* ]]; then
+if has_component "TEZ"; then
     echo "Adding Tez"
     sed -i "s/#, 'TEZ_CLIENT'/, 'TEZ_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"HIVE"* ]]; then
+if has_component "HIVE"; then
     echo "Adding Hive"
     sed -i "s/#, 'HIVE_CLIENT'/, 'HIVE_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- HIVE_SERVER/- HIVE_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- HIVE_METASTORE/- HIVE_METASTORE/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"SPARK2"* ]]; then
+if has_component "SPARK2"; then
     echo "Adding Spark2"
     sed -i "s/#, 'SPARK2_CLIENT'/, 'SPARK2_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- SPARK2_JOBHISTORYSERVER/- SPARK2_JOBHISTORYSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"SPARK3"* ]]; then
+if has_component "SPARK3"; then
     echo "Adding Spark3"
     sed -i "s/#, 'SPARK3_CLIENT'/, 'SPARK3_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- SPARK3_JOBHISTORYSERVER/- SPARK3_JOBHISTORYSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
@@ -276,7 +281,7 @@ if [[ $cluster_type == *"SPARK3"* ]]; then
     sed -i "s/#- LIVY3_SERVER/- LIVY3_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"SPARK3_3_3_3"* ]]; then
+if has_component "SPARK3_3_3_3"; then
     echo "Adding Spark3.3.3"
     sed -i "s/#, 'SPARK3_3_3_3_CLIENT'/, 'SPARK3_3_3_3_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- SPARK3_3_3_3_JOBHISTORYSERVER/- SPARK3_3_3_3_JOBHISTORYSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
@@ -284,7 +289,7 @@ if [[ $cluster_type == *"SPARK3_3_3_3"* ]]; then
     sed -i "s/#- LIVY3_3_3_3_SERVER/- LIVY3_3_3_3_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"SPARK3_3_5_1"* ]]; then
+if has_component "SPARK3_3_5_1"; then
     echo "Adding Spark3.5.1"
     sed -i "s/#, 'SPARK3_3_5_1_CLIENT'/, 'SPARK3_3_5_1_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- SPARK3_3_5_1_JOBHISTORYSERVER/- SPARK3_3_5_1_JOBHISTORYSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
@@ -292,7 +297,7 @@ if [[ $cluster_type == *"SPARK3_3_5_1"* ]]; then
     sed -i "s/#- LIVY3_3_5_1_SERVER/- LIVY3_3_5_1_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"SPARK4"* ]]; then
+if has_component "SPARK4"; then
     echo "Adding Spark4"
     sed -i "s/#, 'SPARK4_CLIENT'/, 'SPARK4_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- SPARK4_JOBHISTORYSERVER/- SPARK4_JOBHISTORYSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
@@ -300,7 +305,7 @@ if [[ $cluster_type == *"SPARK4"* ]]; then
     sed -i "s/#- LIVY4_SERVER/- LIVY4_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"YARN"* ]]; then
+if has_component "YARN"; then
     echo "Adding YARN"
     sed -i "s/#, 'YARN_CLIENT'/, 'YARN_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- RESOURCEMANAGER/- RESOURCEMANAGER/g" ~/ansible-hortonworks/playbooks/group_vars/all
@@ -311,12 +316,13 @@ if [[ $cluster_type == *"YARN"* ]]; then
     sed -i "s/#- APP_TIMELINE_SERVER/- APP_TIMELINE_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"KAFKA"* ]]; then
+if has_component "KAFKA"; then
     echo "Adding Kafka"
     sed -i "s/#- KAFKA_BROKER/- KAFKA_BROKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#, 'KAFKA_CLIENT'/, 'KAFKA_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"HBASE"* ]]; then
+if has_component "HBASE"; then
     echo "Adding Hbase"
     sed -i "s/#, 'HBASE_CLIENT'/, 'HBASE_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- HBASE_REGIONSERVER/- HBASE_REGIONSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
@@ -324,7 +330,7 @@ if [[ $cluster_type == *"HBASE"* ]]; then
     sed -i "s/#- PHOENIX_QUERY_SERVER/- PHOENIX_QUERY_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"HDFS"* ]]; then
+if has_component "HDFS"; then
     echo "Adding HDFS"
     sed -i "s/#, 'HDFS_CLIENT'/, 'HDFS_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- SECONDARY_NAMENODE/- SECONDARY_NAMENODE/g" ~/ansible-hortonworks/playbooks/group_vars/all
@@ -334,7 +340,7 @@ if [[ $cluster_type == *"HDFS"* ]]; then
     sed -i "s/#- JOURNALNODE/- JOURNALNODE/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"DRUID"* ]]; then
+if has_component "DRUID"; then
     echo "Adding DRUID"
     sed -i "s/#- DRUID_BROKER/- DRUID_BROKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- DRUID_COORDINATOR/- DRUID_COORDINATOR/g" ~/ansible-hortonworks/playbooks/group_vars/all
@@ -344,50 +350,51 @@ if [[ $cluster_type == *"DRUID"* ]]; then
     sed -i "s/#- DRUID_ROUTER/- DRUID_ROUTER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"ZOOKEEPER"* ]]; then
+if has_component "ZOOKEEPER"; then
     echo "Adding Zookeeper"
     sed -i "s/#'ZOOKEEPER_CLIENT'/'ZOOKEEPER_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- ZOOKEEPER_SERVER/- ZOOKEEPER_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"KNOX"* ]]; then
+if has_component "KNOX"; then
     echo "Adding KNOX"
     sed -i "s/#- KNOX_GATEWAY/- KNOX_GATEWAY/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"ZEPPELIN"* ]]; then
+if has_component "ZEPPELIN"; then
     echo "Adding ZEPPELIN"
     sed -i "s/#- ZEPPELIN_MASTER/- ZEPPELIN_MASTER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
-if [[ $cluster_type == *"HTTPFS"* ]]; then
+if has_component "HTTPFS"; then
     echo "Adding HTTPFS"
     sed -i "s/#- HTTPFS_GATEWAY/- HTTPFS_GATEWAY/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"JUPYTERHUB"* ]]; then
+if has_component "JUPYTERHUB"; then
     echo "Adding JUPYTERHUB"
     sed -i "s/#- JUPYTERHUB/- JUPYTERHUB/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"FLINK"* ]]; then
+if has_component "FLINK"; then
     echo "Adding FLINK"
     sed -i "s/#- FLINK_JOBHISTORYSERVER/- FLINK_JOBHISTORYSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#, 'FLINK_CLIENT'/, 'FLINK_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"KAFKA3"* ]]; then
+if has_component "KAFKA3"; then
     echo "Adding KAFKA3"
     sed -i "s/#- KAFKA3_MIRRORMAKER/- KAFKA3_MIRRORMAKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- KAFKA3_BROKER/- KAFKA3_BROKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- KAFKA3_CONNECT/- KAFKA3_CONNECT/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#, 'KAFKA3_CLIENT'/, 'KAFKA3_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"CRUISE_CONTROL3"* ]]; then
+if has_component "CRUISE_CONTROL3"; then
     echo "Adding CRUISE_CONTROL3"
     sed -i "s/#- CRUISE_CONTROL3/- CRUISE_CONTROL3/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"IMPALA"* ]]; then
+if has_component "IMPALA"; then
     echo "Adding IMPALA"
     sed -i "s/#- IMPALA_DAEMON/- IMPALA_DAEMON/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- IMPALA_STATE_STORE/- IMPALA_STATE_STORE/g" ~/ansible-hortonworks/playbooks/group_vars/all
@@ -395,7 +402,7 @@ if [[ $cluster_type == *"IMPALA"* ]]; then
     sed -i "s/#, 'IMPALA_CLIENT'/, 'IMPALA_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"PINOT"* ]]; then
+if has_component "PINOT"; then
     echo "Adding PINOT"
     sed -i "s/#- PINOT_BROKER/- PINOT_BROKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- PINOT_CONTROLLER/- PINOT_CONTROLLER/g" ~/ansible-hortonworks/playbooks/group_vars/all
@@ -403,18 +410,18 @@ if [[ $cluster_type == *"PINOT"* ]]; then
     sed -i "s/#- PINOT_MINION/- PINOT_MINION/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"KUDU"* ]]; then
+if has_component "KUDU"; then
     echo "Adding KUDU"
     sed -i "s/#- KUDU_TSERVER/- KUDU_TSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- KUDU_MASTER/- KUDU_MASTER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"REGISTRY"* ]]; then
+if has_component "REGISTRY"; then
     echo "Adding REGISTRY"
     sed -i "s/#- REGISTRY_SERVER/- REGISTRY_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"OZONE"* ]]; then
+if has_component "OZONE"; then
     echo "Adding OZONE"
     sed -i "s/#- OZONE_STORAGE_CONTAINER_MANAGER/- OZONE_STORAGE_CONTAINER_MANAGER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- OZONE_DATANODE/- OZONE_DATANODE/g" ~/ansible-hortonworks/playbooks/group_vars/all
@@ -423,49 +430,117 @@ if [[ $cluster_type == *"OZONE"* ]]; then
     sed -i "s/#- OZONE_RECON/- OZONE_RECON/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"AIRFLOW"* ]]; then
+if has_component "AIRFLOW"; then
     echo "Adding AIRFLOW"
     sed -i "s/#- AIRFLOW_SCHEDULER/- AIRFLOW_SCHEDULER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- AIRFLOW_WEBSERVER/- AIRFLOW_WEBSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- AIRFLOW_WORKER/- AIRFLOW_WORKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"NIFI"* ]]; then
+if has_component "NIFI"; then
     echo "Adding NIFI"
     sed -i "s/#- NIFI_MASTER/- NIFI_MASTER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"NIFI_REGISTRY"* ]]; then
+if has_component "NIFI_REGISTRY"; then
     echo "Adding NIFI REGISTRY"
     sed -i "s/#- NIFI_REGISTRY_MASTER/- NIFI_REGISTRY_MASTER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"HUE"* ]]; then
+if has_component "HUE"; then
     echo "Adding HUE"
     sed -i "s/#- HUE_SERVER/- HUE_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"TRINO"* ]]; then
+if has_component "TRINO"; then
     echo "Adding TRINO"
     sed -i "s/#- TRINO_COORDINATOR/- TRINO_COORDINATOR/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- TRINO_WORKER/- TRINO_WORKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"CLICKHOUSE"* ]]; then
+if has_component "CLICKHOUSE"; then
     echo "Adding CLICKHOUSE"
     sed -i "s/#- CLICKHOUSE_KEEPER/- CLICKHOUSE_KEEPER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- CLICKHOUSE_SERVER/- CLICKHOUSE_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
     sed -i "s/#- CLICKHOUSE_WEBSERVER/- CLICKHOUSE_WEBSERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"MLFLOW"* ]]; then
+if has_component "MLFLOW"; then
     echo "Adding MLFLOW"
     sed -i "s/#- MLFLOW_SERVER/- MLFLOW_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
-if [[ $cluster_type == *"SUPERSET"* ]]; then
+if has_component "SUPERSET"; then
     echo "Adding SUPERSET"
     sed -i "s/#- SUPERSET/- SUPERSET/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if has_component "KAFKA4"; then
+    echo "Adding KAFKA4"
+    sed -i "s/#, 'KAFKA4_CLIENT'/, 'KAFKA4_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- KAFKA4_MIRRORMAKER/- KAFKA4_MIRRORMAKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- KAFKA4_BROKER/- KAFKA4_BROKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- KAFKA4_CONNECT/- KAFKA4_CONNECT/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if has_component "CRUISE_CONTROL4"; then
+    echo "Adding CRUISE_CONTROL4"
+    sed -i "s/#- CRUISE_CONTROL4/- CRUISE_CONTROL4/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if has_component "NIFI2"; then
+    echo "Adding NIFI2"
+    sed -i "s/#- NIFI2_MASTER/- NIFI2_MASTER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if has_component "NIFI_REGISTRY2"; then
+    echo "Adding NIFI REGISTRY2"
+    sed -i "s/#- NIFI_REGISTRY2/- NIFI_REGISTRY2/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if has_component "OZONE2"; then
+    echo "Adding OZONE2"
+    sed -i "s/#, 'OZONE2_CLIENT'/, 'OZONE2_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- OZONE2_STORAGE_CONTAINER_MANAGER/- OZONE2_STORAGE_CONTAINER_MANAGER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- OZONE2_DATANODE/- OZONE2_DATANODE/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- OZONE2_S3_GATEWAY/- OZONE2_S3_GATEWAY/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- OZONE2_MANAGER/- OZONE2_MANAGER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- OZONE2_RECON/- OZONE2_RECON/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if has_component "TRINO-GATEWAY"; then
+    echo "Adding TRINO-GATEWAY"
+    sed -i "s/#- TRINO_GATEWAY/- TRINO_GATEWAY/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+# Tokens are ODP repo dir names; clients are the mpack component names (SPARK_RAPIDS3 vs SPARK4_RAPIDS).
+if has_component "SPARK-RAPIDS-355"; then
+    echo "Adding SPARK-RAPIDS (Spark3)"
+    sed -i "s/#, 'SPARK_RAPIDS3_CLIENT'/, 'SPARK_RAPIDS3_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if has_component "SPARK-RAPIDS-411"; then
+    echo "Adding SPARK-RAPIDS (Spark4)"
+    sed -i "s/#, 'SPARK4_RAPIDS_CLIENT'/, 'SPARK4_RAPIDS_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if has_component "CELEBORN"; then
+    echo "Adding CELEBORN"
+    sed -i "s/#, 'CELEBORN_CLIENT'/, 'CELEBORN_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- CELEBORN_MASTER/- CELEBORN_MASTER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- CELEBORN_WORKER/- CELEBORN_WORKER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if has_component "SOLR"; then
+    echo "Adding SOLR"
+    sed -i "s/#, 'SOLR_CLIENT'/, 'SOLR_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- SOLR_SERVER/- SOLR_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
+fi
+
+if has_component "ATLAS"; then
+    echo "Adding ATLAS"
+    sed -i "s/#, 'ATLAS_CLIENT'/, 'ATLAS_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
+    sed -i "s/#- ATLAS_SERVER/- ATLAS_SERVER/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
 
