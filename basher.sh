@@ -92,7 +92,8 @@ else
     # ansible-ubuntu/ansible-rhel8/ansible-centos7 are gone), so there is a
     # single clone here instead of a case on $OS_TYPE.
     echo "Cloning ansible-odp repository for $OS_TYPE"
-    git clone -b master https://${GITHUB_TOKEN}@github.com/acceldata-io/ansible-odp.git
+    git clone -b ODP-7535 git@github.com:acceldata-io/ansible-odp.git
+    #git clone -b master https://${GITHUB_TOKEN}@github.com/acceldata-io/ansible-odp.git
     mv ansible-odp ansible-hortonworks
 fi
 
