@@ -201,7 +201,7 @@ fi
 # Component selection
 echo "Configuring components..."
 
-# Exact token match; substring matching let OZONE fire on OZONE2 and SOLR on INFRA-SOLR.
+# Exact token match; substring matching let SOLR fire on INFRA-SOLR and KAFKA on KAFKA3.
 has_component() {
     [[ ",${cluster_type// /}," == *",$1,"* ]]
 }
@@ -497,16 +497,6 @@ fi
 if has_component "NIFI_REGISTRY2"; then
     echo "Adding NIFI REGISTRY2"
     sed -i "s/#- NIFI_REGISTRY2/- NIFI_REGISTRY2/g" ~/ansible-hortonworks/playbooks/group_vars/all
-fi
-
-if has_component "OZONE2"; then
-    echo "Adding OZONE2"
-    sed -i "s/#, 'OZONE2_CLIENT'/, 'OZONE2_CLIENT'/g" ~/ansible-hortonworks/playbooks/group_vars/all
-    sed -i "s/#- OZONE2_STORAGE_CONTAINER_MANAGER/- OZONE2_STORAGE_CONTAINER_MANAGER/g" ~/ansible-hortonworks/playbooks/group_vars/all
-    sed -i "s/#- OZONE2_DATANODE/- OZONE2_DATANODE/g" ~/ansible-hortonworks/playbooks/group_vars/all
-    sed -i "s/#- OZONE2_S3_GATEWAY/- OZONE2_S3_GATEWAY/g" ~/ansible-hortonworks/playbooks/group_vars/all
-    sed -i "s/#- OZONE2_MANAGER/- OZONE2_MANAGER/g" ~/ansible-hortonworks/playbooks/group_vars/all
-    sed -i "s/#- OZONE2_RECON/- OZONE2_RECON/g" ~/ansible-hortonworks/playbooks/group_vars/all
 fi
 
 if has_component "TRINO-GATEWAY"; then
